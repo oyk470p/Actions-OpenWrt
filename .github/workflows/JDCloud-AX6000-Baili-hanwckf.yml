@@ -17,7 +17,7 @@ on:
       LAN_IP:
         description: 'Set LAN IP Address'
         required: true
-        default: '192.168.1.1'
+        default: '192.168.68.1'
       WIFI_DRIVER:
         description: 'Choose WiFi Driver'
         required: true
@@ -64,8 +64,8 @@ on:
 env:
   ###############手动修改##############
   OPENWRT_NAME: hanwckf
-  REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
-  REPO_BRANCH: openwrt-21.02
+  REPO_URL: https://github.com/oyk470p/immortalwrt-mt798x-rebase
+  REPO_BRANCH: 25.12-dev
   FEEDS_CONF: JDCloud-AX6000-Baili-hanwckf/feeds.conf.default
   CONFIG_FILE: JDCloud-AX6000-Baili-hanwckf/.mtwifi-cfg.config
   DIY_P1_SH: JDCloud-AX6000-Baili-hanwckf/diy-part1.sh
@@ -77,7 +77,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     permissions:
       contents: write
@@ -161,7 +161,7 @@ jobs:
         wifi_driver=$(echo "${{ github.event.inputs.WIFI_DRIVER }}" | sed -E 's/^(v[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+).*/\1/')
         firmware=$(echo "${{ github.event.inputs.WIFI_DRIVER }}" | sed -E 's/.*fw-([0-9]{8}|default).*/\1/g')
         if [ "$wifi_driver" == "v7.6.6.1" ]; then
-                sed -i 's/CONFIG_MTK_MT_WIFI_DRIVER_VERSION_7672=y/CONFIG_MTK_MT_WIFI_DRIVER_VERSION_7661=y/g' .config
+                sed -i 's/CONFIG_MTK_MT_WIFI_DRIVER_VERSION_7673=y/CONFIG_MTK_MT_WIFI_DRIVER_VERSION_7661=y/g' .config
         fi
         if [ "$firmware" == "default" ]; then
                 sed -i 's/CONFIG_MTK_MT_WIFI_MT7986_20240823=y/CONFIG_MTK_MT_WIFI_MT7986_DEFAULT_FIRMWARE=y/g' .config
